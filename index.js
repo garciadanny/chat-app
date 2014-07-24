@@ -15,9 +15,14 @@ app.get('/', function(req, res) {
 
 io.on('connection', function(socket) {
    console.log('A user connected...');
+
+   socket.on('chat message', function(message) {
+    socket.broadcast.emit('chat message', message);
+   });
+
    socket.on('disconnect', function() {
        console.log('A user disconnected...');
-   })
+   });
 });
 
 server.listen(8080, function() {
