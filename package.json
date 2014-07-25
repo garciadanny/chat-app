@@ -4,6 +4,7 @@
   "description": "A real-time chat application using express and socket.io",
   "dependencies": {
     "express": "~4.6.1",
-    "socket.io": "~1.0.6"
+    "socket.io": "~1.0.6",
+    "redis": "~0.11.0"
   }
 }
