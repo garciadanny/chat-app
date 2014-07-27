@@ -4,6 +4,7 @@ var userName = prompt('Create a username:');
 
 socket.emit('join', userName);
 socket.on('join', function(userName) {
+  $('#online-users').append( $('<li>' + userName + '</li>') );
   $('#messages').append( $('<li>').text( userName + ' has joined the chatroom...'));
 });
 
@@ -22,6 +23,15 @@ socket.on('chat message', function (userName, message) {
   $('#messages').append($('<li>').text(userName + ": " + message));
 });
 
+socket.on('online-users', function(userName) {
+    var user = $('<li>' + userName + '</li>').data('user', userName);
+    $('#online-users').append(user);
+});
+
 socket.on('disconnected', function(userName) {
   $('#messages').append( $('<li>').text( userName + ' has left the chatroom...'));
+});
+
+socket.on('remove-user', function(userName) {
+    $("#online-users>li:contains(" + userName + ")").remove();
 });
