@@ -1,0 +1,66 @@
+/*
+    Temporary Styling that allows you to visually understand how
+    elements are positioned on the page.
+*/
+
+
+
+.elem {
+    position: relative;
+    border: solid #6AC5AC 3px;
+}
+
+.elem-red {
+    border: solid red 3px;
+}
+
+.elem-red > .label, .elem-red > .endlabel {
+    color: white;
+    background-color: red;
+}
+
+.elem-orange {
+    border: solid orange 3px;
+}
+
+.elem-orange > .label, .elem-orange > .endlabel {
+    color: black;
+    background-color: orange;
+}
+
+.elem-blue {
+    border: solid blue 3px;
+}
+
+.elem-blue > .label, .elem-blue > .endlabel {
+    color: white;
+    background-color: blue;
+}
+
+.elem-brown {
+    border: solid saddlebrown 3px;
+}
+
+.elem-brown > .label, .elem-brown > .endlabel {
+    color: white;
+    background-color: saddlebrown;
+}
+
+.label, .endlabel {
+    position: absolute;
+    background-color: #6AC5AC;
+    color: #414142;
+    line-height: 1em;
+}
+
+.label {
+    top: 0;
+    left: 0;
+    padding: 0 3px 3px 0;
+}
+
+.endlabel {
+    right: 0;
+    bottom: 0;
+    padding: 3px 0 0 3px;
+}
