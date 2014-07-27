@@ -24,8 +24,7 @@ socket.on('chat message', function (userName, message) {
 });
 
 socket.on('online-users', function(userName) {
-    var user = $('<li>' + userName + '</li>').data('user', userName);
-    $('#online-users').append(user);
+    $('#online-users').append( $('<li>' + userName + '</li>') );
 });
 
 socket.on('disconnected', function(userName) {
