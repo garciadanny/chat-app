@@ -1,3 +1,7 @@
+/*
+    Globals
+*/
+
 html, body {
     height: 100%;
 }
@@ -31,20 +35,6 @@ form button {
     padding: 10px 0;
 }
 
-#messages {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-#messages li {
-    padding: 5px 10px;
-}
-
-#messages li:nth-child(odd) {
-    background: #eee;
-}
-
 /*
     Online Users
 */
@@ -63,6 +53,10 @@ form button {
     background-color: whitesmoke;
 }
 
+/*
+    Messages
+*/
+
 .chat-box {
     padding: 0px;
     height: 95%;
@@ -70,6 +64,23 @@ form button {
 
 }
 
+#messages {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#messages li {
+    padding: 5px 10px;
+}
+
+#messages li:nth-child(odd) {
+    background: #eee;
+}
+
+/*
+    Message form
+*/
 .msg-form {
     padding: 0px;
     position: fixed;
