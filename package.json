@@ -11,7 +11,7 @@
     "type": "git",
     "url": "https://github.com/garciadanny/chat-app.git"
   },
-  "engine": {
+  "engines": {
     "node": "0.10.24"
   },
   "author": "Danny-Garcia",
