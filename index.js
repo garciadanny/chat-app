@@ -1,13 +1,11 @@
 var express = require('express');
 var http = require('http');
 var socket = require('socket.io');
-var redis = require('redis');
-var ioServer = require('./app/assets/javascripts/server');
+var IOServer = require('./app/assets/javascripts/server');
 
 var app = express();
 var server = http.Server(app);
 var io = socket.listen(server);
-var redisClient = redis.createClient();
 
 
 app.use(express.static(__dirname + '/app/views'));
@@ -18,26 +16,24 @@ app.get('/', function (req, res) {
 });
 
 io.on('connection', function (socket) {
-  console.log('A user connected...');
-
-  var socketId = socket.id.toString();
+  var ioServer = new IOServer(socket);
 
   socket.on('join', function (userName) {
-    ioServer.addUser(redisClient, socketId, socket, userName);
-    ioServer.displayOnlineUsers(redisClient, socket);
-    ioServer.displayMessageHistory(redisClient, socket);
+    ioServer.addUser(userName);
+    ioServer.displayOnlineUsers();
+    ioServer.displayMessageHistory();
   });
 
   socket.on('chat message', function (message) {
-    ioServer.displayMessage(redisClient, socketId, socket, message);
+    ioServer.displayMessage(message);
   });
 
   socket.on('disconnect', function () {
     console.log('A user disconnected...');
-    ioServer.disconnectUser(redisClient, socketId, socket);
+    ioServer.disconnectUser();
   });
 });
 
-server.listen(8080, function () {
-  console.log('Listening on port: 8080')
+server.listen(3000, function () {
+  console.log('Listening on port: 3000')
 });
