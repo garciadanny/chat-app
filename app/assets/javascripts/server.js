@@ -1,5 +1,15 @@
-var redis = require('redis');
-var redisClient = redis.createClient();
+//
+// Implement the Redis To Go connection in production.
+// Otherwise, in development, create a local client.
+//
+
+if (process.env.REDISTOGO_URL) {
+  var rtg   = require("url").parse(process.env.REDISTOGO_URL);
+  var redis = require("redis").createClient(rtg.port, rtg.hostname);
+  redis.auth(rtg.auth.split(":")[1]);
+} else {
+  var redisClient = require('redis').createClient();
+}
 
 function IOServer (socket) {
   var socketId = socket.id.toString();
