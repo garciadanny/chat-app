@@ -7,12 +7,15 @@ var app = express();
 var server = http.Server(app);
 var io = socket.listen(server);
 
-
-app.use(express.static(__dirname + '/app/views'));
 app.use(express.static(__dirname + '/app/assets'));
 
 app.get('/', function (req, res) {
-  res.sendfile('index.html');
+  res.sendfile(__dirname + '/app/views/index.html');
+});
+
+app.get('/:room_id', function(req, res) {
+  res.sendfile(__dirname + '/app/views/chat_room.html');
+  var room_id = req.params.room_id;
 });
 
 io.on('connection', function (socket) {

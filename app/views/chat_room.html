@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Chat-app</title>
+		<link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+		<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="stylesheets/chat-room.css">
+		<link rel="stylesheet" type="text/css" href="stylesheets/elements.css">
+	</head>
+	<body>
+
+		<div class="row col-xs-12 chat-room">
+			<div class="col-xs-3 col-sm-2 online-users">
+				<ul id="online-users"></ul>
+			</div>
+
+			<div class="col-xs-9 col-sm-10 chat-box">
+				<ul id="messages"></ul>
+			</div>
+			<div class="col-xs-9 col-sm-10 msg-form">
+				<form action="">
+					<input id="message" autocomplete="off"/>
+					<button>Send</button>
+				</form>
+			</div>
+		</div>
+
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	<script src="javascripts/client.js"></script>
+	</body>
+</html>
