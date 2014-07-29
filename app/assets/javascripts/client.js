@@ -8,7 +8,7 @@ socket.on('join', function(userName) {
   $('#messages').append( $('<li>').text( userName + ' has joined the chatroom...'));
 });
 
-$('form').submit(function (event) {
+$('#chat-form').submit(function (event) {
   event.preventDefault();
   event.stopPropagation();
 
