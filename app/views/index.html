@@ -4,16 +4,46 @@
     <title>Chat-app</title>
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+		<link href='http://fonts.googleapis.com/css?family=Lato:100,400' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/styles.css">
     <link rel="stylesheet" type="text/css" href="stylesheets/elements.css">
   </head>
   <body>
 
-    <div class="container">
-			<h1>Chat app</h1>
-    </div>
+		<div class="container">
+			<h1 class="brand"><span id="chat">Chat</span><span id="app">app</span></h1>
+			<div class="row col-md-8 actions">
 
+				<a class="btn btn-primary action-button" id="join" href="#">Join a room</a>
+				<div id="join-form">
+					<form role="form">
+						<div class="form-group">
+							<input type="username" class="form-control" id="create-username" placeholder="Create a username">
+						</div>
+						<div class="form-group">
+							<input type="chatroom" class="form-control" id="create-chatroom" placeholder="Room id">
+						</div>
+						<button type="submit" class="btn btn-success">join</button>
+					</form>
+				</div>
+
+				<a class="btn btn-success action-button" id="create" href="#">Create a room</a>
+				<div id="create-form">
+					<form role="form">
+						<div class="form-group">
+							<input type="username" class="form-control" id="join-username" placeholder="Create a username">
+						</div>
+						<div class="form-group">
+							<input type="chatroom" class="form-control" id="join-chatroom" placeholder="Give your room a name">
+						</div>
+						<button type="submit" class="btn btn-success">create</button>
+					</form>
+				</div>
+
+			</div>
+		</div>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+		<script src="javascripts/create_room.js"></script>
     <script src="javascripts/client.js"></script>
   </body>
 </html>

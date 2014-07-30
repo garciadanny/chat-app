@@ -1,0 +1,44 @@
+.container {
+    margin: 20% auto;
+}
+
+/* Logo */
+
+.brand {
+    text-align: center;
+    cursor: pointer;
+}
+
+#chat {
+    font-weight: bold;
+    font-size: 150px;
+    font-family: 'Lato', sans-serif;
+}
+
+#app {
+    font-weight: lighter;
+    font-size: 150px;
+    font-family: 'Lato', sans-serif;
+}
+
+/* Buttons to create/join a room */
+
+.actions {
+    float: none;
+    margin: 50px auto;
+    text-align: center;
+}
+
+.action-button {
+    margin: 0 10px;
+}
+
+/* Forms to create/join rooms */
+
+#create-form {
+    display: none;
+}
+
+#join-form {
+    display: none;
+}
