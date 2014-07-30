@@ -14,8 +14,8 @@ app.get('/', function (req, res) {
 });
 
 app.get('/:room_id', function(req, res) {
-  res.sendfile(__dirname + '/app/views/chat_room.html');
   var room_id = req.params.room_id;
+  res.sendfile(__dirname + '/app/views/chat_room.html');
 });
 
 io.on('connection', function (socket) {
