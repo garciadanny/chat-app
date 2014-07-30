@@ -19,7 +19,7 @@ $(document).ready( function() {
     var username = $("#create-username").val();
     var chatroom = $("#create-chatroom").val();
 
-    socket.emit("initialize room", username, chatroom);
+//    socket.emit("initialize room", username, chatroom);
   });
 
 //  $(".brand").on("click", function(event) {
