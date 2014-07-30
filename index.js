@@ -1,6 +1,7 @@
 var express = require('express');
 var http = require('http');
 var socket = require('socket.io');
+var bodyParser = require('body-parser');
 var IOServer = require('./app/assets/javascripts/server');
 
 var app = express();
@@ -8,15 +9,22 @@ var server = http.Server(app);
 var io = socket.listen(server);
 
 app.use(express.static(__dirname + '/app/assets'));
+app.use(bodyParser.urlencoded({ extended: false }))
 
 app.get('/', function (req, res) {
   res.sendfile(__dirname + '/app/views/index.html');
 });
 
-app.get('/:room_id', function(req, res) {
-  var room_id = req.params.room_id;
-  res.sendfile(__dirname + '/app/views/chat_room.html');
+app.post('/create', function(req, res) {
+  console.log('Create Action!!!')
+  console.log(req.body);
+//  res.redirect('/');
 });
+
+//app.get('/:room_id', function(req, res) {
+//  var room_id = req.params.room_id;
+//  res.sendfile(__dirname + '/app/views/chat_room.html');
+//});
 
 io.on('connection', function (socket) {
   var ioServer = new IOServer(socket);
