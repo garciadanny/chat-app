@@ -1,36 +1,43 @@
-var socket = io();
+$(document).ready( function() {
+  var cookie = document.cookie.split("; ");
+  var userName = cookie[1].match(/\=(.*)/)[1];
+  var roomName = cookie[2].match(/\=(.*)/)[1];
+  var roomId = window.location.pathname.split('/')[1];
+  var socket = io();
 
-var userName = prompt('Create a username:');
-
-socket.emit('join', userName);
-socket.on('join', function(userName) {
-  $('#online-users').append( $('<li>' + userName + '</li>') );
-  $('#messages').append( $('<li>').text( userName + ' has joined the chatroom...'));
-});
-
-$('#chat-form').submit(function (event) {
-  event.preventDefault();
-  event.stopPropagation();
-
-  var message = $('#message').val();
-
-  $('#messages').append($('<li>').text(userName + ": " + message));
-  socket.emit('chat message', message);
-  $('#message').val('');
-});
-
-socket.on('chat message', function (userName, message) {
-  $('#messages').append($('<li>').text(userName + ": " + message));
-});
-
-socket.on('online-users', function(userName) {
+  socket.emit('join', userName);
+  socket.on('join', function(userName) {
     $('#online-users').append( $('<li>' + userName + '</li>') );
-});
+    $('#messages').append( $('<li>').text( userName + ' has joined the chatroom...'));
+  });
 
-socket.on('disconnected', function(userName) {
-  $('#messages').append( $('<li>').text( userName + ' has left the chatroom...'));
-});
+  $('#chat-form').submit(function (event) {
+    event.preventDefault();
+    event.stopPropagation();
 
-socket.on('remove-user', function(userName) {
+    var message = $('#message').val();
+
+    $('#messages').append($('<li>').text(userName + ": " + message));
+    socket.emit('chat message', message);
+    $('#message').val('');
+  });
+
+  socket.on('chat message', function (userName, message) {
+    $('#messages').append($('<li>').text(userName + ": " + message));
+  });
+
+  socket.on('online-users', function(userName) {
+    $('#online-users').append( $('<li>' + userName + '</li>') );
+  });
+
+  socket.on('disconnected', function(userName) {
+    $('#messages').append( $('<li>').text( userName + ' has left the chatroom...'));
+  });
+
+  socket.on('remove-user', function(userName) {
     $("#online-users>li:contains(" + userName + ")").remove();
+  });
+
 });
+
+
