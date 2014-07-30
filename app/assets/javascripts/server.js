@@ -12,16 +12,40 @@ if (process.env.REDISTOGO_URL) {
 }
 
 function IOServer (socket) {
-  var socketId = socket.id.toString();
+  var socketId = socket.id.toString(),
+      roomId,
+      roomName,
+      userName;
 
-  this.addUser = function(userName) {
-    redisClient.set(socketId, userName);
-    redisClient.sadd('online-users', userName);
-    socket.broadcast.emit('join', userName);
+  this.initializeRoom = function(data) {
+    roomId = data.roomId;
+    roomName = data.roomName;
+    userName = data.userName;
+
+    console.log('Socket id: ' + socketId);
+    console.log('Room id: ' + roomId);
+    console.log('Username: ' + userName);
+    console.log('Roomname: ' + roomName);
+
+    addUser();
+    prepareRoom();
   };
 
-  this.displayOnlineUsers = function() {
-    redisClient.smembers('online-users', function(err, users) {
+  function addUser() {
+    socket.join(roomId);
+    var store = roomId + 'online-users';
+    redisClient.sadd(store, userName);
+    socket.broadcast.to(roomId).emit('join', userName);
+  };
+
+  function prepareRoom() {
+    displayOnlineUsers();
+    displayMessageHistory();
+  };
+
+  function displayOnlineUsers() {
+    var store = roomId + 'online-users';
+    redisClient.smembers(store, function(err, users) {
       if (err) throw err
 
       users.reverse();
@@ -31,8 +55,9 @@ function IOServer (socket) {
     });
   };
 
-  this.displayMessageHistory = function() {
-    redisClient.lrange("messages", 0, -1, function(err, messages) {
+  function displayMessageHistory() {
+    var store = roomId + 'messages';
+    redisClient.lrange(store, 0, -1, function(err, messages) {
       if (err) throw err
 
       messages = messages.reverse();
@@ -49,31 +74,25 @@ function IOServer (socket) {
   };
 
   this.displayMessage = function(message) {
-    redisClient.get(socketId, function(err, userName) {
-      if (err) throw err
+      socket.broadcast.to(roomId).emit('chat message', userName, message);
+      storeUserMessage(message);
+  };
 
-      socket.broadcast.emit('chat message', userName, message);
-      storeUserMessage(userName, message);
+  function storeUserMessage(message) {
+    var store = roomId + 'messages';
+    var userMessage = JSON.stringify( {userName: userName, data: message} );
+    redisClient.lpush(store, userMessage, function(err, userMessage) {
+      redisClient.ltrim("messages", 0, 20);
     });
   };
 
   this.disconnectUser = function() {
-    redisClient.get(socketId, function(err, userName) {
-      if (err) throw err
-      socket.broadcast.emit('disconnected', userName);
-      socket.broadcast.emit('remove-user', userName);
-      redisClient.srem('online-users', userName);
-      redisClient.del(socketId);
-//    redisClient.del("messages");
-//    redisClient.del("online-users");
-    });
-  };
-
-  function storeUserMessage(userName, message) {
-    var userMessage = JSON.stringify( {userName: userName, data: message} );
-    redisClient.lpush("messages", userMessage, function(err, userMessage) {
-      redisClient.ltrim("messages", 0, 20);
-    });
+      socket.broadcast.to(roomId).emit('disconnected', userName);
+      socket.broadcast.to(roomId).emit('remove-user', userName);
+      var store = roomId + 'online-users';
+      redisClient.srem(store, userName);
+//    redisClient.del(roomId + "messages");
+//    redisClient.del(roomId + "online-users");
   };
 };
 

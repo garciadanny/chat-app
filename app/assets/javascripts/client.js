@@ -1,11 +1,30 @@
 $(document).ready( function() {
+
+  // The cookie contains the client's username and the name
+  // of the chat-room.
   var cookie = document.cookie.split("; ");
-  var userName = cookie[1].match(/\=(.*)/)[1];
-  var roomName = cookie[2].match(/\=(.*)/)[1];
+
+  // Different browsers append extra data to the beginning of the
+  // cookie. This ensures we get the last two elements:
+  // the username and room-name.
+  var userInput = cookie.slice(cookie.length - 2);
+  var userName = userInput[0].match(/\=(.*)/)[1];
+  var roomName = userInput[1].match(/\=(.*)/)[1];
+
+  // Grab the private room-id from the URL
   var roomId = window.location.pathname.split('/')[1];
+
+  // Gather chat-room data
+  var chatRoomData = {roomId: roomId, roomName: roomName, userName: userName};
+
+  // Initialize a socket.io client instance
   var socket = io();
 
-  socket.emit('join', userName);
+  // Inform the server a user has joined a chat-room.
+  socket.emit('join', chatRoomData);
+
+  // Event listeners
+
   socket.on('join', function(userName) {
     $('#online-users').append( $('<li>' + userName + '</li>') );
     $('#messages').append( $('<li>').text( userName + ' has joined the chatroom...'));

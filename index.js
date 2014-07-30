@@ -17,12 +17,10 @@ app.get('/', function (req, res) {
 });
 
 app.post('/create', function(req, res) {
-  var userName = req.body.username;
-  var chatRoom = req.body.chatroom;
   var roomId = randomString.generate();
-  res.cookie('userName', userName);
-  res.cookie('chatRoom', chatRoom);
-//  res.redirect('/chat/' + roomId);
+
+  res.cookie('userName', req.body.username);
+  res.cookie('chatRoom', req.body.chatroom);
   res.redirect('/' + roomId);
 });
 
@@ -33,10 +31,8 @@ app.get('/:room_id', function(req, res) {
 io.on('connection', function (socket) {
   var ioServer = new IOServer(socket);
 
-  socket.on('join', function (userName) {
-    ioServer.addUser(userName);
-    ioServer.displayOnlineUsers();
-    ioServer.displayMessageHistory();
+  socket.on('join', function (data) {
+      ioServer.initializeRoom(data);
   });
 
   socket.on('chat message', function (message) {
