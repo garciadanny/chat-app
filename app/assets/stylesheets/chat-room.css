@@ -88,3 +88,12 @@ form button {
     right: 0;
     height: 5%;
 }
+
+/*
+    Join Modal
+*/
+
+.join-button {
+    position: relative;
+
+}

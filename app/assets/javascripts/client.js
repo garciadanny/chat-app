@@ -1,27 +1,92 @@
 $(document).ready( function() {
 
-  // The cookie contains the client's username and the name
-  // of the chat-room.
-  var cookie = document.cookie.split("; ");
-
-  // Different browsers append extra data to the beginning of the
-  // cookie. This ensures we get the last two elements:
-  // the username and room-name.
-  var userInput = cookie.slice(cookie.length - 2);
-  var userName = userInput[0].match(/\=(.*)/)[1];
-  var roomName = userInput[1].match(/\=(.*)/)[1];
-
   // Grab the private room-id from the URL
   var roomId = window.location.pathname.split('/')[1];
 
-  // Gather chat-room data
-  var chatRoomData = {roomId: roomId, roomName: roomName, userName: userName};
-
   // Initialize a socket.io client instance
-  var socket = io();
+  var socket;
 
-  // Inform the server a user has joined a chat-room.
-  socket.emit('join', chatRoomData);
+  // Validate there is a username for the user
+  validateUser();
+
+  function validateUser() {
+
+    if (userNameExists()) {
+      socket = io(); // Connect socket
+      var chatRoomData = gatherData();
+      socket.emit('join', chatRoomData);
+    } else {
+      // Append room_id to model
+      $("#room_id").val(roomId);
+      // Display modal
+      $(".bs-example-modal-sm").modal({
+        show: true,
+        backdrop: 'static',
+        keyboard: false
+      })
+      // Emit join event
+      if (joinedSuccessfully()) {
+        socket = io(); // Connect socket
+        socket.emit('join', gatherData());
+      }
+    }
+  }
+
+  function joinedSuccessfully() {
+    var userInput = getUserInput();
+    var key = userInput[1];
+    var joinStatus = key.match(/btrue/);
+
+    if (joinStatus.length != 0) {
+      if (joinStatus[0] === 'true') {
+        return true
+      }
+    } else {
+      return false
+    }
+  }
+
+  function userNameExists() {
+    var userInput = getUserInput();
+    var key = userInput[0];
+    var keyName;
+
+    if (key.length === 0) {
+      return false
+    } else {
+      keyName = key.match(/\busername/)[0];
+    }
+
+    if (keyName === 'username') {
+      if ( getUserName().length != 0 ) {
+        return true
+      } else {
+        return false
+      }
+    } else {
+      return false
+    }
+  }
+
+  function getUserName() {
+    var userInput = getUserInput();
+    return userInput[0].match(/\=(.*)/)[1];
+  }
+
+  function getUserInput() {
+    // The cookie contains the client's username and the name
+    // of the chat-room.
+    var cookie = document.cookie.split("; ");
+
+    // Different browsers append extra data to the beginning of the
+    // cookie. This ensures we get the last two elements:
+    // the username and room-name.
+    return userInput = cookie.slice(cookie.length - 2);
+  }
+
+  function gatherData() {
+    return { roomId: roomId, userName: getUserName() };
+  }
 
   // Event listeners
 
@@ -36,7 +101,7 @@ $(document).ready( function() {
 
     var message = $('#message').val();
 
-    $('#messages').append($('<li>').text(userName + ": " + message));
+    $('#messages').append($('<li>').text(getUserName() + ": " + message));
     socket.emit('chat message', message);
     $('#message').val('');
   });

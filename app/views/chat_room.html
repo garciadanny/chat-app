@@ -9,6 +9,27 @@
 	</head>
 	<body>
 
+		<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+
+					<div class="modal-header">
+						<h4 class="modal-title" id="mySmallModalLabel">Create a username</h4>
+					</div>
+					<div class="modal-body">
+						<form role="form" action="/join" method="post">
+							<div class="form-group">
+								<input name="username" type="text" class="form-control" id="join-username" placeholder="username">
+								<input name="room_id" type="hidden" class="form-control" id="room_id" value="">
+							</div>
+							<button type="submit" class="btn btn-success join-button">join</button>
+						</form>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div>
+
+
 		<div class="row col-xs-12 chat-room">
 			<div class="col-xs-3 col-sm-2 online-users">
 				<ul id="online-users"></ul>
@@ -27,6 +48,7 @@
 
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<script src="javascripts/client.js"></script>
 	</body>
 </html>
