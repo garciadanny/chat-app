@@ -21,6 +21,11 @@
     font-family: 'Lato', sans-serif;
 }
 
+.intro {
+    text-align: center;
+    color: grey;
+}
+
 /* Buttons to create/join a room */
 
 .actions {
