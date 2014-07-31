@@ -14,27 +14,11 @@
 			<h1 class="brand"><span id="chat">Chat</span><span id="app">app</span></h1>
 			<div class="row col-md-8 actions">
 
-				<a class="btn btn-primary action-button" id="join" href="#">Join a room</a>
-				<div id="join-form">
-					<form role="form" action="/join" method="post">
-						<div class="form-group">
-							<input name="username" type="text" class="form-control" id="join-username" placeholder="Create a username">
-						</div>
-						<div class="form-group">
-							<input name="room_id" type="text" class="form-control" id="join-chatroom" placeholder="Room id">
-						</div>
-						<button type="submit" class="btn btn-success">join</button>
-					</form>
-				</div>
-
 				<a class="btn btn-success action-button" id="create" href="#">Create a room</a>
 				<div id="create-form">
 					<form role="form" action="/create" method="post">
 						<div class="form-group">
 							<input name="username" type="text" class="form-control" id="create-username" placeholder="Create a username">
-						</div>
-						<div class="form-group">
-							<input name="chatroom" type="text" class="form-control" id="create-chatroom" placeholder="Give your room a name">
 						</div>
 						<button type="submit" class="btn btn-success">create</button>
 					</form>
