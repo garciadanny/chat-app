@@ -16,12 +16,12 @@
 
 				<a class="btn btn-primary action-button" id="join" href="#">Join a room</a>
 				<div id="join-form">
-					<form role="form">
+					<form role="form" action="/join" method="post">
 						<div class="form-group">
-							<input type="username" class="form-control" id="join-username" placeholder="Create a username">
+							<input name="username" type="text" class="form-control" id="join-username" placeholder="Create a username">
 						</div>
 						<div class="form-group">
-							<input type="chatroom" class="form-control" id="join-chatroom" placeholder="Room id">
+							<input name="room_id" type="text" class="form-control" id="join-chatroom" placeholder="Room id">
 						</div>
 						<button type="submit" class="btn btn-success">join</button>
 					</form>
