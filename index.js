@@ -18,9 +18,14 @@ app.get('/', function (req, res) {
 
 app.post('/create', function(req, res) {
   var roomId = randomString.generate();
+  res.cookie('username', req.body.username);
+  res.redirect('/' + roomId);
+});
 
-  res.cookie('userName', req.body.username);
-  res.cookie('chatRoom', req.body.chatroom);
+app.post('/join', function(req, res) {
+  var roomId = req.body.room_id;
+  res.cookie('username', req.body.username);
+  res.cookie('join', 'true');
   res.redirect('/' + roomId);
 });
 
@@ -29,6 +34,7 @@ app.get('/:room_id', function(req, res) {
 });
 
 io.on('connection', function (socket) {
+  console.log("A user connected......")
   var ioServer = new IOServer(socket);
 
   socket.on('join', function (data) {
