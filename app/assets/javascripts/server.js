@@ -14,19 +14,11 @@ if (process.env.REDISTOGO_URL) {
 function IOServer (socket) {
   var socketId = socket.id.toString(),
       roomId,
-      roomName,
       userName;
 
   this.initializeRoom = function(data) {
     roomId = data.roomId;
-    roomName = data.roomName;
     userName = data.userName;
-
-    console.log('Socket id: ' + socketId);
-    console.log('Room id: ' + roomId);
-    console.log('Username: ' + userName);
-    console.log('Roomname: ' + roomName);
-
     addUser();
     prepareRoom();
   };
