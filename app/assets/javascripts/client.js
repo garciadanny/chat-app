@@ -91,8 +91,9 @@ $(document).ready( function() {
   // Event listeners
 
   socket.on('join', function(userName) {
-    $('#online-users').append( $('<li>' + userName + '</li>') );
-    $('#messages').append( $('<li>').text( userName + ' has joined the chatroom...'));
+    var name = decodeURI(userName);
+    $('#online-users').append( $('<li>' + name + '</li>') );
+    $('#messages').append( $('<li>').text( name + ' has joined the chatroom...'));
   });
 
   $('#chat-form').submit(function (event) {
@@ -100,26 +101,31 @@ $(document).ready( function() {
     event.stopPropagation();
 
     var message = $('#message').val();
+    var name = decodeURI(getUserName());
 
-    $('#messages').append($('<li>').text(getUserName() + ": " + message));
+    $('#messages').append($('<li>').text( name + ": " + message));
     socket.emit('chat message', message);
     $('#message').val('');
   });
 
   socket.on('chat message', function (userName, message) {
-    $('#messages').append($('<li>').text(userName + ": " + message));
+    var name = decodeURI(userName);
+    $('#messages').append($('<li>').text(name + ": " + message));
   });
 
   socket.on('online-users', function(userName) {
-    $('#online-users').append( $('<li>' + userName + '</li>') );
+    var name = decodeURI(userName);
+    $('#online-users').append( $('<li>' + name + '</li>') );
   });
 
   socket.on('disconnected', function(userName) {
-    $('#messages').append( $('<li>').text( userName + ' has left the chatroom...'));
+    var name = decodeURI(userName);
+    $('#messages').append( $('<li>').text( name + ' has left the chatroom...'));
   });
 
   socket.on('remove-user', function(userName) {
-    $("#online-users>li:contains(" + userName + ")").remove();
+    var name = decodeURI(userName);
+    $("#online-users>li:contains(" + name + ")").remove();
   });
 
 });
