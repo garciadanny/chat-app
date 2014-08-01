@@ -1,4 +1,6 @@
-# Chat-app
+![chat-app](/app/assets/images/chat-app.png)
+
+---
 
 A real-time chat application written in node.js, utilizing the express web framework and socket.io.
 
